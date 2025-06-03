@@ -16,9 +16,9 @@ public class MenuVentas extends JPanel {
     JPanel westPanel = new JPanel();
     JTable table;
     Object[][] tableData = obtenerData(new ArrayList(controlVentas.obtener().values()));
-    public MenuVentas(JPanel container) {
+    public MenuVentas(JPanel container, DetallesVenta detalles) {
         setLayout(null);
-        eastPanel.setLayout(new GridLayout(7, 1, 0, 10));
+        eastPanel.setLayout(new GridLayout(8, 1, 0, 10));
         westPanel.setLayout(new BorderLayout());
 
         westPanel.setBounds(0,0,400,600);
@@ -35,6 +35,18 @@ public class MenuVentas extends JPanel {
         crear.addActionListener(e -> {
             CardLayout cl = (CardLayout) container.getLayout();
             cl.show(container, "Panel8");
+        });
+
+        JButton detallesBtn = new JButton("Detalles");
+        detallesBtn.addActionListener(e -> {
+            int column = table.getSelectedColumn();
+            int id = (int) table.getValueAt(0, column);
+            Venta venta = controlVentas.obtenerPorID(id);
+
+            detalles.setVenta(venta);
+
+            CardLayout cl = (CardLayout) container.getLayout();
+            cl.show(container, "Panel10");
         });
 
         JButton anular = new JButton("Anular");
@@ -56,6 +68,7 @@ public class MenuVentas extends JPanel {
         });
 
         eastPanel.add(crear);
+        eastPanel.add(detallesBtn);
         eastPanel.add(anular);
         eastPanel.add(listarAnulados);
         eastPanel.add(volver);
@@ -112,15 +125,6 @@ public class MenuVentas extends JPanel {
         controlVentas.anularVenta(id);
         refresh();
     }
-
-    private String listarProductos(Venta venta) {
-        String[] productos = {""};
-        venta.getProductos().forEach( (prod, cant) -> {
-            productos[0] = prod.getNombre() + "-" + cant +"\n";
-        });
-        return productos[0];
-    }
-
 
     public void refresh() {
         westPanel.removeAll();

@@ -18,12 +18,13 @@ public class Menu extends JFrame{
         MenuPrincipal menuPrincipal = new MenuPrincipal(mainPanel);
         MenuClientes menuClientes = new MenuClientes(mainPanel);
         MenuProductos menuProductos = new MenuProductos(mainPanel);
-        MenuVentas menuVentas = new MenuVentas(mainPanel);
         CrearCliente crearCliente = new CrearCliente(mainPanel);
         EditarCliente editarCliente = new EditarCliente(mainPanel);
         CrearProducto crearProducto = new CrearProducto(mainPanel);
         MenuCrearVenta crearVenta = new MenuCrearVenta(mainPanel);
         ListaAnulados listaAnulados = new ListaAnulados(mainPanel);
+        DetallesVenta detallesVenta = new DetallesVenta(mainPanel);
+        MenuVentas menuVentas = new MenuVentas(mainPanel, detallesVenta);
 
         mainPanel.add(menuPrincipal, "Panel1");
         mainPanel.add(menuClientes, "Panel2");
@@ -34,7 +35,7 @@ public class Menu extends JFrame{
         mainPanel.add(crearProducto, "Panel7");
         mainPanel.add(crearVenta, "Panel8");
         mainPanel.add(listaAnulados, "Panel9");
-
+        mainPanel.add(detallesVenta, "Panel10");
 
         menuClientes.addComponentListener(new ComponentAdapter() {
             @Override
@@ -89,6 +90,13 @@ public class Menu extends JFrame{
             @Override
             public void componentShown(ComponentEvent e) {
                 listaAnulados.refresh();
+            }
+        });
+
+        detallesVenta.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                detallesVenta.refresh();
             }
         });
 
