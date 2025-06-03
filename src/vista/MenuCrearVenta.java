@@ -67,6 +67,8 @@ public class MenuCrearVenta extends JPanel {
         guardarBtn.addActionListener(e -> {
             guardarVenta();
             refresh();
+            CardLayout cl = (CardLayout) container.getLayout();
+            cl.show(container, "Panel4");
         });
 
         JButton borrar = new JButton("Borrar");
@@ -78,7 +80,7 @@ public class MenuCrearVenta extends JPanel {
         JButton volver = new JButton("Volver");
         volver.addActionListener(e -> {
             CardLayout cl = (CardLayout) container.getLayout();
-            cl.show(container, "Panel1");
+            cl.show(container, "Panel4");
         });
 
         eastPanel.add(clienteText);

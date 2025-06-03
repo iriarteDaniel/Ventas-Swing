@@ -8,6 +8,7 @@ public class Venta {
     private Cliente cliente = null;
     private HashMap<Producto, Integer> productos = new HashMap();
     private LocalDate fecha = null;
+    private boolean anulado = false;
 
     public Venta(Cliente cliente, HashMap<Producto, Integer> productos, int id){
         setId(id);
@@ -80,5 +81,13 @@ public class Venta {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public boolean getAnulado(){
+        return this.anulado;
+    }
+
+    public void setAnulado(boolean anulado){
+        this.anulado = anulado;
     }
 }

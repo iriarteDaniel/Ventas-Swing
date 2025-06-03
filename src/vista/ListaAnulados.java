@@ -9,14 +9,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MenuVentas extends JPanel {
+public class ListaAnulados extends JPanel {
     private final ControladorVentas controlVentas = new ControladorVentas();
-    private final ControladorCliente controlClientes = new ControladorCliente();
     JPanel eastPanel = new JPanel();
     JPanel westPanel = new JPanel();
     JTable table;
     Object[][] tableData = obtenerData(new ArrayList(controlVentas.obtener().values()));
-    public MenuVentas(JPanel container) {
+    public ListaAnulados(JPanel container) {
         setLayout(null);
         eastPanel.setLayout(new GridLayout(7, 1, 0, 10));
         westPanel.setLayout(new BorderLayout());
@@ -29,35 +28,14 @@ public class MenuVentas extends JPanel {
         crearTabla();
 
         eastPanel.add(new JLabel("Ventas Swing"));
-        eastPanel.add(new JLabel("Gestion de Ventas"));
-
-        JButton crear = new JButton("Crear");
-        crear.addActionListener(e -> {
-            CardLayout cl = (CardLayout) container.getLayout();
-            cl.show(container, "Panel8");
-        });
-
-        JButton anular = new JButton("Anular");
-        anular.addActionListener(e -> {
-            anularVenta();
-        });
-
-        JButton listarAnulados = new JButton("Listar Anulados");
-        listarAnulados.addActionListener(e -> {
-            CardLayout cl = (CardLayout) container.getLayout();
-            cl.show(container, "Panel9");
-        });
-
+        eastPanel.add(new JLabel("Ventas Anuladas"));
 
         JButton volver = new JButton("Volver");
         volver.addActionListener(e -> {
             CardLayout cl = (CardLayout) container.getLayout();
-            cl.show(container, "Panel1");
+            cl.show(container, "Panel4");
         });
 
-        eastPanel.add(crear);
-        eastPanel.add(anular);
-        eastPanel.add(listarAnulados);
         eastPanel.add(volver);
 
         add(westPanel);
@@ -65,13 +43,12 @@ public class MenuVentas extends JPanel {
 
         setVisible(true);
     }
-
     public Object[][] obtenerData(ArrayList<Venta> ventas){
         Object[][] data = new Object[ventas.size()][4];
 
         int[] i = {0};
         ventas.forEach(venta->{
-            if(venta.getAnulado()){
+            if(!venta.getAnulado()){
                 return;
             }
             data[i[0]][0] = venta.getId();
@@ -98,29 +75,6 @@ public class MenuVentas extends JPanel {
         westPanel.add(scrollPane, BorderLayout.CENTER);
         System.out.println("table created");
     }
-
-    private void anularVenta(){
-        int row = table.getSelectedRow();
-        System.out.println(row);
-
-        if(row == -1){
-            JOptionPane.showMessageDialog(null,"No se selecciono ningun cliente");
-            return;
-        }
-
-        int id = (int) table.getValueAt(row, 0);
-        controlVentas.anularVenta(id);
-        refresh();
-    }
-
-    private String listarProductos(Venta venta) {
-        String[] productos = {""};
-        venta.getProductos().forEach( (prod, cant) -> {
-            productos[0] = prod.getNombre() + "-" + cant +"\n";
-        });
-        return productos[0];
-    }
-
 
     public void refresh() {
         westPanel.removeAll();

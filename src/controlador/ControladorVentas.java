@@ -62,4 +62,8 @@ public class ControladorVentas implements Controlador<Venta> {
 
         return ventas;
     }
+
+    public void anularVenta(int id){
+        repoVentas.obtenerPorID(id).setAnulado(true);
+    }
 }
