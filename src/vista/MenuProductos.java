@@ -22,7 +22,7 @@ public class MenuProductos extends JPanel{
     boolean reversedCategoria = false;
     boolean reversedId = false;
 
-    public MenuProductos(JPanel container) {
+    public MenuProductos(JPanel container, EditarProducto editarProducto) {
         setLayout(null);
 
         // Panels
@@ -58,8 +58,15 @@ public class MenuProductos extends JPanel{
 
         JButton editar = new JButton("Editar");
         editar.addActionListener(e -> {
+            int row = table.getSelectedRow();
+
+            String nombre = table.getValueAt(row, 0).toString();
+            String categoria = table.getValueAt(row, 1).toString();
+            int nroSerie = (int) table.getValueAt(row, 2);
+            editarProducto.setFields(nombre, categoria, nroSerie);
+
             CardLayout cl = (CardLayout) container.getLayout();
-            cl.show(container, "Panel6");
+            cl.show(container, "Panel11");
         });
 
         JButton volver = new JButton("Volver");

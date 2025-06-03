@@ -14,38 +14,34 @@ public class EditarCliente extends JPanel {
     JTextField edadField;
     JTextField ciField;
 
+    JLabel Titulo;
+    JLabel nombre;
+    JLabel email;
+    JLabel edad;
+    JLabel ci;
+    JButton create;
+    JButton back;
+
     public EditarCliente(JPanel container){
         setLayout(new GridLayout(11, 1));
 
-        JLabel Titulo = new JLabel("Crear Cliente");
+        Titulo = new JLabel("Crear Cliente");
 
-        JLabel nombre = new JLabel("Nombre:");
+        nombre = new JLabel("Nombre:");
         nombreField = new JTextField();
 
-        JLabel email = new JLabel("Email:");
+        email = new JLabel("Email:");
         emailField = new JTextField();
 
-        JLabel edad = new JLabel("Edad:");
+        edad = new JLabel("Edad:");
         edadField = new JTextField();
 
-        JLabel ci = new JLabel("Cedula de Identidad:");
+        ci = new JLabel("Cedula de Identidad:");
         ciField = new JTextField();
         ciField.setEditable(false);
 
-        JButton create = new JButton("Crear");
-        JButton back = new JButton("Volver");
-
-        add(Titulo);
-        add(nombre);
-        add(nombreField);
-        add(email);
-        add(emailField);
-        add(edad);
-        add(edadField);
-        add(ci);
-        add(ciField);
-        add(create);
-        add(back);
+        create = new JButton("Crear");
+        back = new JButton("Volver");
 
         create.addActionListener(e -> {
             String nombreTexto = nombreField.getText();
@@ -101,11 +97,29 @@ public class EditarCliente extends JPanel {
         return false;
     }
 
+    public void setFields(String nombre, String email, int edad, int ci){
+        refresh();
+
+        this.nombreField.setText(nombre);
+        this.emailField.setText(email);
+        this.edadField.setText(Integer.toString(edad));
+        this.ciField.setText(Integer.toString(ci));
+    }
+
     public void refresh() {
-        nombreField.setText("");
-        emailField.setText("");
-        edadField.setText("");
-        ciField.setText("");
+        removeAll();
+
+        add(Titulo);
+        add(nombre);
+        add(nombreField);
+        add(email);
+        add(emailField);
+        add(edad);
+        add(edadField);
+        add(ci);
+        add(ciField);
+        add(create);
+        add(back);
 
         revalidate();
         repaint();

@@ -20,7 +20,7 @@ public class MenuClientes extends JPanel {
     boolean reversedEdad = false;
     boolean reversedCi = false;
 
-    public MenuClientes(JPanel container) {
+    public MenuClientes(JPanel container, EditarCliente editarPanel) {
         setLayout(null);
 
         // Panels
@@ -54,6 +54,14 @@ public class MenuClientes extends JPanel {
 
         JButton editar = new JButton("Editar");
         editar.addActionListener(e -> {
+            int row = table.getSelectedRow();
+
+            String nombre = table.getValueAt(row, 0).toString();
+            String email = table.getValueAt(row, 1).toString();
+            int edad = (int) table.getValueAt(row, 2);
+            int ci = (int) table.getValueAt(row, 3);
+            editarPanel.setFields(nombre, email, edad, ci);
+
             CardLayout cl = (CardLayout) container.getLayout();
             cl.show(container, "Panel6");
         });

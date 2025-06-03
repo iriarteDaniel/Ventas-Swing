@@ -16,8 +16,7 @@ public class Menu extends JFrame{
         JPanel mainPanel = new JPanel(new CardLayout());
 
         MenuPrincipal menuPrincipal = new MenuPrincipal(mainPanel);
-        MenuClientes menuClientes = new MenuClientes(mainPanel);
-        MenuProductos menuProductos = new MenuProductos(mainPanel);
+
         CrearCliente crearCliente = new CrearCliente(mainPanel);
         EditarCliente editarCliente = new EditarCliente(mainPanel);
         CrearProducto crearProducto = new CrearProducto(mainPanel);
@@ -25,6 +24,9 @@ public class Menu extends JFrame{
         ListaAnulados listaAnulados = new ListaAnulados(mainPanel);
         DetallesVenta detallesVenta = new DetallesVenta(mainPanel);
         MenuVentas menuVentas = new MenuVentas(mainPanel, detallesVenta);
+        MenuClientes menuClientes = new MenuClientes(mainPanel, editarCliente);
+        EditarProducto editarProducto = new EditarProducto(mainPanel);
+        MenuProductos menuProductos = new MenuProductos(mainPanel, editarProducto);
 
         mainPanel.add(menuPrincipal, "Panel1");
         mainPanel.add(menuClientes, "Panel2");
@@ -36,6 +38,7 @@ public class Menu extends JFrame{
         mainPanel.add(crearVenta, "Panel8");
         mainPanel.add(listaAnulados, "Panel9");
         mainPanel.add(detallesVenta, "Panel10");
+        mainPanel.add(editarProducto, "Panel11");
 
         menuClientes.addComponentListener(new ComponentAdapter() {
             @Override
