@@ -1,15 +1,22 @@
 package vista;
 
 import controlador.ControladorCliente;
+import controlador.ControladorVentas;
+import modelo.Cliente;
+import modelo.Venta;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MenuVentas extends JPanel {
+    private final ControladorVentas controlVentas = new ControladorVentas();
     private final ControladorCliente controlClientes = new ControladorCliente();
     JPanel eastPanel = new JPanel();
     JPanel westPanel = new JPanel();
     JTable table;
+    Object[][] tableData = obtenerData(new ArrayList(controlVentas.obtener().values()));
     public MenuVentas(JPanel container) {
         setLayout(null);
         eastPanel.setLayout(new GridLayout(7, 1, 0, 10));
@@ -53,27 +60,29 @@ public class MenuVentas extends JPanel {
         setVisible(true);
     }
 
-    public Object[][] obtenerData(){
-        var clientes = controlClientes.obtener();
+    public Object[][] obtenerData(ArrayList<Venta> ventas){
+        Object[][] data = new Object[ventas.size()][4];
 
-        Object[][] data = new Object[clientes.size()][4];
-
-        final int[] i = {0};
-        clientes.forEach((clave, valor)->{
-            data[i[0]][0] = valor.getNombre();
-            data[i[0]][1] = valor.getEmail();
-            data[i[0]][2] = valor.getEdad();
-            data[i[0]][3] = valor.getNumDocumento();
-            i[0]++;
+        int[] i = {0};
+        ventas.forEach(venta->{
+            data[i[0]][0] = venta.getCliente().getNombre();
+            String[] productos = new String[ventas.size()];
+            int[] j = {0};
+            data[i[0]][1] = listarProductos(venta);
         });
 
         return data;
     }
 
     private void crearTabla(){
-        String[] clientColumnNames = {"Nombre", "Cliente", "Producto", "Fecha"};
+        String[] clientColumnNames = {"ID", "Cliente", "Producto", "Cantidad", "Fecha"};
 
-        table = new JTable(obtenerData(), clientColumnNames);
+        table = new JTable(new DefaultTableModel(tableData, clientColumnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
 
         JScrollPane scrollPane = new JScrollPane(table);
 
@@ -90,8 +99,26 @@ public class MenuVentas extends JPanel {
         refresh();
     }
 
+    private String listarProductos(Venta venta) {
+        String[] productos = {""};
+        venta.getProductos().forEach( (prod, cant) -> {
+            productos[0] = prod.getNombre() + "-" + cant +"\n";
+        });
+        return productos[0];
+    }
+
+    /*private String listarProductos(Venta venta) {
+        String[] productos = {""};
+        venta.getProductos().forEach( (prod, cant) -> {
+            productos[0] = prod.getNombre() + "-" + cant +"\n";
+        });
+        return productos[0];
+    }*/
+
+
     public void refresh() {
         westPanel.removeAll();
+        tableData = obtenerData(new ArrayList<Venta>(controlVentas.obtener().values()));
         crearTabla();
         westPanel.revalidate();
         westPanel.repaint();

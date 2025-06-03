@@ -66,7 +66,7 @@ public class Venta {
         this.fecha = fecha;
     }
 
-    public Map getProductos() {
+    public HashMap<Producto, Integer> getProductos() {
         return productos;
     }
 

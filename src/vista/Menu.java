@@ -47,6 +47,13 @@ public class Menu extends JFrame{
             }
         });
 
+        menuVentas.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                menuVentas.refresh();
+            }
+        });
+
         crearCliente.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
