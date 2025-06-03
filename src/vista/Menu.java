@@ -1,0 +1,83 @@
+package vista;
+
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import javax.swing.*;
+
+public class Menu extends JFrame{
+    public Menu() {
+        setTitle("Ventas Swing");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
+
+        JPanel mainPanel = new JPanel(new CardLayout());
+
+        MenuPrincipal menuPrincipal = new MenuPrincipal(mainPanel);
+        MenuClientes menuClientes = new MenuClientes(mainPanel);
+        MenuProductos menuProductos = new MenuProductos(mainPanel);
+        MenuVentas menuVentas = new MenuVentas(mainPanel);
+        CrearCliente crearCliente = new CrearCliente(mainPanel);
+        EditarCliente editarCliente = new EditarCliente(mainPanel);
+        CrearProducto crearProducto = new CrearProducto(mainPanel);
+        MenuCrearVenta crearVenta = new MenuCrearVenta(mainPanel);
+
+        mainPanel.add(menuPrincipal, "Panel1");
+        mainPanel.add(menuClientes, "Panel2");
+        mainPanel.add(menuProductos, "Panel3");
+        mainPanel.add(menuVentas, "Panel4");
+        mainPanel.add(crearCliente, "Panel5");
+        mainPanel.add(editarCliente, "Panel6");
+        mainPanel.add(crearProducto, "Panel7");
+        mainPanel.add(crearVenta, "Panel8");
+
+        menuClientes.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                menuClientes.refresh();
+            }
+        });
+
+        menuProductos.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                menuProductos.refresh();
+            }
+        });
+
+        crearCliente.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                crearCliente.refresh();
+            }
+        });
+
+        editarCliente.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                editarCliente.refresh();
+            }
+        });
+
+        crearProducto.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                crearProducto.refresh();
+            }
+        });
+
+        crearVenta.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                crearVenta.refresh();
+            }
+        });
+
+        add(mainPanel);
+
+        setVisible(true);
+    }
+
+}
