@@ -110,7 +110,7 @@ public class MenuCrearVenta extends JPanel {
     }
 
     public Object[][] obtenerData(){
-        Object[][] data = new Object[this.idProductos.size()+1][4];
+        Object[][] data = new Object[this.idProductos.size()+1][5];
 
         String nombreCliente;
         if (idCliente == 0){
@@ -121,13 +121,14 @@ public class MenuCrearVenta extends JPanel {
 
 
         data[0][0] = nombreCliente;
-        data[0][3] = idVenta;
+        data[0][4] = idVenta;
 
         final int[] i = {0};
         idProductos.forEach((id, cant)->{
             String nombreProducto = controlProducto.obtenerPorID(id).getNombre();
             data[i[0]][1] = nombreProducto;
-            data[i[0]][2] = cant;
+            data[i[0]][2] = id;
+            data[i[0]][3] = cant;
             i[0]++;
         });
 
@@ -135,7 +136,7 @@ public class MenuCrearVenta extends JPanel {
     }
 
     private void crearTabla(){
-        String[] clientColumnNames = {"Cliente", "Producto", "Cantidad", "ID"};
+        String[] clientColumnNames = {"Cliente", "Producto", "ID Producto", "Cantidad", "ID"};
 
         table = new JTable(obtenerData(), clientColumnNames);
 
@@ -160,15 +161,15 @@ public class MenuCrearVenta extends JPanel {
             case 0:
                 this.idCliente = 0;
                 break;
-            case 1, 2:
+            case 1, 2, 3:
                 try{
-                    String idProducto = table.getValueAt(row, 1).toString();
+                    String idProducto = table.getValueAt(row, 2).toString();
                     this.idProductos.remove(Integer.parseInt(idProducto));
                 } catch (Exception e){
                     System.out.println(e.getMessage());
                 }
                 break;
-            case 3:
+            case 4:
                 this.idVenta = 0;
                 break;
         }
