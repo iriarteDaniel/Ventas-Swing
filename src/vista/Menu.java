@@ -85,7 +85,8 @@ public class Menu extends JFrame{
         crearVenta.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                crearVenta.refresh();
+                crearVenta.refreshEastPanel();
+                crearVenta.refreshWestPanel();
             }
         });
 

@@ -56,6 +56,11 @@ public class MenuClientes extends JPanel {
         editar.addActionListener(e -> {
             int row = table.getSelectedRow();
 
+            if(row == -1){
+                JOptionPane.showMessageDialog(null, "No se selecciono ningun cliente");
+                return;
+            }
+
             String nombre = table.getValueAt(row, 0).toString();
             String email = table.getValueAt(row, 1).toString();
             int edad = (int) table.getValueAt(row, 2);

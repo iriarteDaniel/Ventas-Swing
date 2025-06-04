@@ -21,7 +21,6 @@ public class MenuPrincipal extends JPanel {
 
         eastPanel.setBackground(Color.GRAY);
 
-
         // Labels
         JLabel titulo = new JLabel("Ventas Swing");
         titulo.setFont(new Font("Arial", Font.BOLD, 30));
@@ -31,7 +30,6 @@ public class MenuPrincipal extends JPanel {
 
         eastPanel.add(titulo);
         eastPanel.add(menuText);
-
 
         // Buttons
         JButton gestionClientes = new JButton("Gestion de Clientes");

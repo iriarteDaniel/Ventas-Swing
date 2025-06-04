@@ -22,6 +22,12 @@ public class MenuCrearVenta extends JPanel {
     private int idCliente = 0;
     private HashMap<Integer, Integer> idProductos = new HashMap<>();
     private int idVenta = 0;
+
+    JTextField clienteField;
+    JTextField prodField;
+    JTextField cantField;
+    JTextField idField;
+
     public MenuCrearVenta(JPanel container) {
         setLayout(null);
         eastPanel.setLayout(new GridLayout(17, 1, 0, 10));
@@ -38,43 +44,42 @@ public class MenuCrearVenta extends JPanel {
         eastPanel.add(new JLabel("Gestion de Ventas"));
 
         JLabel clienteText = new JLabel("CI del Cliente");
-        JTextField clienteField = new JTextField();
+        clienteField = new JTextField();
         JButton clienteBtn = new JButton("Guardar");
         clienteBtn.addActionListener(e -> {
             guardarCliente(clienteField);
-            refresh();
+            refreshWestPanel();
         });
 
         JLabel prodText = new JLabel("Numero de Serie del Producto");
-        JTextField prodField = new JTextField();
+        prodField = new JTextField();
         JLabel cantText = new JLabel("Cant.");
-        JTextField cantField = new JTextField();
+        cantField = new JTextField();
         JButton prodBtn = new JButton("Guardar");
         prodBtn.addActionListener(e -> {
             guardarProducto(prodField, cantField);
-            refresh();
+            refreshWestPanel();
         });
 
         JLabel idText = new JLabel("ID de la venta");
-        JTextField idField = new JTextField();
+        idField = new JTextField();
         JButton idBtn = new JButton("Guardar");
         idBtn.addActionListener(e -> {
             guardarId(idField);
-            refresh();
+            refreshWestPanel();
         });
 
         JButton guardarBtn = new JButton("Finalizar Venta");
         guardarBtn.addActionListener(e -> {
             guardarVenta();
-            refresh();
+            refreshWestPanel();
             CardLayout cl = (CardLayout) container.getLayout();
             cl.show(container, "Panel4");
         });
 
         JButton borrar = new JButton("Borrar");
         borrar.addActionListener(e -> {
-            CardLayout cl = (CardLayout) container.getLayout();
-            cl.show(container, "Panel1");
+            delete();
         });
 
         JButton volver = new JButton("Volver");
@@ -141,20 +146,34 @@ public class MenuCrearVenta extends JPanel {
     }
 
     public void delete(){
-        /*int row = table.getSelectedRow();
+        int row = table.getSelectedRow();
         int column = table.getSelectedColumn();
         System.out.println(row);
         System.out.println(column);
 
-        switch (column){
-            case 1:
-                this.idCliente = 0;
-                break;
-            case 2:
-                this.idProductos.remove();
+        if(row == -1){
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna celda");
+            return;
         }
 
-        refresh();*/
+        switch (column) {
+            case 0:
+                this.idCliente = 0;
+                break;
+            case 1, 2:
+                try{
+                    String idProducto = table.getValueAt(row, 1).toString();
+                    this.idProductos.remove(Integer.parseInt(idProducto));
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case 3:
+                this.idVenta = 0;
+                break;
+        }
+
+        refreshWestPanel();
     }
 
     private void guardarCliente(JTextField textField) {
@@ -233,7 +252,21 @@ public class MenuCrearVenta extends JPanel {
 
     }
 
-    public void refresh() {
+    public void refreshEastPanel() {
+        clienteField.setText("");
+        prodField.setText("");
+        cantField.setText("");
+        idField.setText("");
+
+        idCliente = 0;
+        idProductos = new HashMap<>();
+        idVenta = 0;
+
+        eastPanel.revalidate();
+        eastPanel.repaint();
+    }
+
+    public void refreshWestPanel(){
         westPanel.removeAll();
         crearTabla();
         westPanel.revalidate();

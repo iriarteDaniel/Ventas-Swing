@@ -60,6 +60,11 @@ public class MenuProductos extends JPanel{
         editar.addActionListener(e -> {
             int row = table.getSelectedRow();
 
+            if(row == -1){
+                JOptionPane.showMessageDialog(null, "No se selecciono ningun producto");
+                return;
+            }
+
             String nombre = table.getValueAt(row, 0).toString();
             String categoria = table.getValueAt(row, 1).toString();
             int nroSerie = (int) table.getValueAt(row, 2);
