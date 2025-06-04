@@ -39,14 +39,14 @@ public class MenuVentas extends JPanel {
 
         JButton detallesBtn = new JButton("Detalles");
         detallesBtn.addActionListener(e -> {
-            int column = table.getSelectedColumn();
+            int row = table.getSelectedRow();
 
-            if(column == -1){
+            if(row == -1){
                 JOptionPane.showMessageDialog(null, "No se selecciono ninguna venta");
                 return;
             }
 
-            int id = (int) table.getValueAt(0, column);
+            int id = (int) table.getValueAt(row, 0);
             Venta venta = controlVentas.obtenerPorID(id);
 
             detalles.setVenta(venta);
